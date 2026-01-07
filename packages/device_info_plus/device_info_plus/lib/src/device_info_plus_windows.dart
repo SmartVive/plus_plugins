@@ -60,9 +60,14 @@ class DeviceInfoPlusWindowsPlugin extends DeviceInfoPlatform {
       final displayVersion =
           currentVersionKey.getString('DisplayVersion') ?? '';
       final editionId = currentVersionKey.getString('EditionID') ?? '';
-      final installDate = DateTime.fromMillisecondsSinceEpoch(
-        1000 * (currentVersionKey.getInt('InstallDate') ?? 0),
-      );
+      DateTime installDate;
+      try {
+        installDate = DateTime.fromMillisecondsSinceEpoch(
+          1000 * (currentVersionKey.getInt('InstallDate') ?? 0),
+        );
+      } catch (e) {
+        installDate = DateTime.fromMillisecondsSinceEpoch(0);
+      }
       final productId = currentVersionKey.getString('ProductID') ?? '';
       var productName = currentVersionKey.getString('ProductName') ?? '';
       final registeredOwner =
